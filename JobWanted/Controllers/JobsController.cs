@@ -38,7 +38,7 @@ namespace JobWanted.Controllers
                 return data.Data;
 
             var cityCode = CodesData.GetCityCode(RecruitEnum.智联招聘, city);
-            string url = string.Format("http://sou.zhaopin.com/jobs/searchresult.ashx?jl={0}&kw={1}&p={2}", cityCode, key, index);
+            string url = string.Format("http://sou.zhaopin.com/jobs/searchresult.ashx?kt=3&jl={0}&kw={1}&p={2}", cityCode, key, index);
             using (HttpClient http = new HttpClient())
             {
                 var htmlString = await http.GetStringAsync(url);

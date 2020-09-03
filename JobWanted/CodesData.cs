@@ -20,13 +20,17 @@ namespace JobWanted
         /// <returns></returns>
         public static string GetCityCode(RecruitEnum type, string city)
         {
+            /*智联
+             * [{"code":"530","text":"北京"},{"code":"538","text":"上海"},{"code":"765","text":"深圳"},{"code":"763","text":"广州"},{"code":"531","text":"天津"},{"code":"801","text":"成都"},{"code":"653","text":"杭州"},{"code":"736","text":"武汉"},{"code":"600","text":"大连"},{"code":"613","text":"长春"},{"code":"635","text":"南京"},{"code":"702","text":"济南"},{"code":"703","text":"青岛"},{"code":"639","text":"苏州"},{"code":"599","text":"沈阳"},{"code":"854","text":"西安"},{"code":"719","text":"郑州"},{"code":"749","text":"长沙"},{"code":"551","text":"重庆"},{"code":"622","text":"哈尔滨"},{"code":"636","text":"无锡"},{"code":"654","text":"宁波"},{"code":"681","text":"福州"},{"code":"682","text":"厦门"},{"code":"565","text":"石家庄"},{"code":"664","text":"合肥"},{"code":"773","text":"惠州"}]
+             */
+
             city = city.Trim().TrimEnd('市');
             if (codes.Count <= 0)
             {
                 codes.Add("北京", new string[] { "北京", "010000", "010", "101010100" });
                 codes.Add("上海", new string[] { "上海", "020000", "020", "101020100" });
                 codes.Add("深圳", new string[] { "深圳", "040000", "050090", "101280600" });
-                codes.Add("广州", new string[] { "广州", "030200", "050020", "101280100" });
+                codes.Add("广州", new string[] { "广州", "763", "050020", "101280100" });
                 codes.Add("杭州", new string[] { "杭州", "080200", "070020", "101210100" });
                 codes.Add("成都", new string[] { "成都", "090200", "280020", "101270100" });
                 codes.Add("南京", new string[] { "南京", "070200", "060020", "101190100" });
