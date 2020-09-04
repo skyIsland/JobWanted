@@ -38,22 +38,22 @@ namespace JobWanted.Controllers
                 return data.Data;
 
             var cityCode = CodesData.GetCityCode(RecruitEnum.智联招聘, city);
-            string url = string.Format("http://sou.zhaopin.com/jobs/searchresult.ashx?kt=3&jl={0}&kw={1}&p={2}", cityCode, key, index);
+            string url = string.Format("https://sou.zhaopin.com?jl={0}&kw={1}&p={2}", cityCode, key, index);
             using (HttpClient http = new HttpClient())
             {
                 var htmlString = await http.GetStringAsync(url);
                 HtmlParser htmlParser = new HtmlParser();
                 var jobInfos = htmlParser.Parse(htmlString)
-                    .QuerySelectorAll(".newlist_list_content table")
-                    .Where(t => t.QuerySelectorAll(".zwmc a").FirstOrDefault() != null)
+                    .QuerySelectorAll(".contentpile__content__wrapper")
+                    .Where(t => t.QuerySelectorAll(".contentpile__content__wrapper__item__info a").FirstOrDefault() != null)
                     .Select(t => new JobInfo()
                     {
-                        PositionName = t.QuerySelectorAll(".zwmc a").FirstOrDefault().TextContent,
-                        CorporateName = t.QuerySelectorAll(".gsmc a").FirstOrDefault().TextContent,
-                        Salary = t.QuerySelectorAll(".zwyx").FirstOrDefault().TextContent,
-                        WorkingPlace = t.QuerySelectorAll(".gzdd").FirstOrDefault().TextContent,
-                        ReleaseDate = t.QuerySelectorAll(".gxsj span").FirstOrDefault().TextContent,
-                        DetailsUrl = t.QuerySelectorAll(".zwmc a").FirstOrDefault().Attributes.FirstOrDefault(f => f.Name == "href").Value,
+                        PositionName = t.QuerySelectorAll(".contentpile__content__wrapper__item__info a").FirstOrDefault().GetAttribute("title"),
+                        CorporateName = t.QuerySelectorAll(".contentpile__content__wrapper__item__info__box__cname__title company_title a").FirstOrDefault().TextContent,
+                        Salary = t.QuerySelectorAll("p.contentpile__content__wrapper__item__info__box__job__saray").FirstOrDefault().TextContent,
+                        WorkingPlace = t.QuerySelectorAll(".contentpile__content__wrapper__item__info__box__job__demand__item").FirstOrDefault().TextContent,
+                        //ReleaseDate = t.QuerySelectorAll(".gxsj span").FirstOrDefault().TextContent,
+                        DetailsUrl = t.QuerySelectorAll(".contentpile__content__wrapper__item__info a").FirstOrDefault().Attributes.FirstOrDefault(f => f.Name == "href").Value,
                     })
                     .ToList();
 
